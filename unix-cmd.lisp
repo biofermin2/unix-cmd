@@ -3,11 +3,13 @@
 
 ;; (pwd)					; => #P"/home/hiro/howm/junk/"
 
-(defun cd (path)
+(defun cd (&optional (path (user-homedir-pathname)))
   (uiop:chdir path))			; => CD
 
-;; (cd "~/howm")				; => 0
-;; (pwd)					; => #P"/home/hiro/howm/"
+;;(cd)					; => 0
+;;(pwd)					; => #P"/home/hiro/"
+;;(cd "~/test")				; => 0
+;;(pwd)					; => #P"/home/hiro/test/"
 
 
 (defun ls (path)
