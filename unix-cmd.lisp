@@ -11,11 +11,11 @@
 ;;(cd "~/test")				; => 0
 ;;(pwd)					; => #P"/home/hiro/test/"
 
-
-(defun ls (path)
+(defun ls (&optional (path (pwd)))
   (uiop:directory-files path))		; => LS
+
 ;; (ls "~/test/")				; => (#P"/home/hiro/test/fuga" #P"/home/hiro/test/hoge")
-;; (ls (pwd))				; => (#P"/home/hiro/test/fuga" #P"/home/hiro/test/hoge")
+;; (ls)				; => (#P"/home/hiro/test/fuga" #P"/home/hiro/test/hoge")
 
 (defun cat (&rest files)
   (dolist (f (apply #'directory files))
