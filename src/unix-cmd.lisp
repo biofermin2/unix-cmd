@@ -1,3 +1,11 @@
+(defpackage :unix-cmd
+  (:use :cl)
+  (:export :directory-stack
+   :pwd :ls :cat :rm :touch :rmdir :pushd :popd
+   :date :cp :mkdir))			; => #<PACKAGE "UNIX-CMD">
+(in-package :unix-cmd)			; => #<PACKAGE "UNIX-CMD">
+
+
 (defvar directory-stack ())		; => DIRECTORY-STACK
 
 (defun pwd ()
@@ -44,14 +52,11 @@
    (merge-pathnames dir
 		    (pwd))))		; => RMDIR
 
-
-
 (defun cp (in-file out-file)
   (uiop:copy-file (merge-pathnames in-file
 				   (pwd))
 		  (merge-pathnames out-file
 				   (pwd)))) ; => CP
-
 
 (defun pushd (dir)
   (push (pwd) directory-stack)
