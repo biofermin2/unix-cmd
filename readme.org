@@ -1,0 +1,86 @@
+https://qiita.com/takaxp/items/a5fa7cec7b0ab2faf3b2
+斜体 	/Italic/ 	*Italic*
+
+
+太字 	*Bold* 	
+
+見出し1 	
+* Heading 1 	
+
+# Heading 1
+
+=========
+見出し2 	
+** Heading 2 	
+
+---------
+リンク 	
+[[http://a][Link]]
+
+なお，[[http://a]]とURLだけ入れるのも可．
+	[Link](http://a)
+
+or
+[Link][1]
+︙
+[1]: http://a
+外部画像 	[[http://orgmode.org/img/org-mode-unicorn-logo.png]]
+
+or
+[[https://orgmode.org][https://orgmode.org/img/org-mode-unicorn-logo.png]]
+
+なお，[[]]で括らない生のURLでもOK．
+	![Image](https://commonmark.org/help/images/favicon.png)
+
+or
+![Image][1]
+︙
+[1]: http://orgmode.org/img/org-mode-unicorn-logo.png
+引用 	#+begin_quote
+Quote
+#+end_quote 	> Blockquote
+リスト 	- List
+- List
+- List
+
++ も使える．
+	* List
+* List
+* List
+
+or
+- List
+- List
+- List
+番号リスト 	1. One
+2. Two
+3. Three
+
+1),2),3) も使える．
+	1. One
+2. Two
+3. Three
+
+or
+1) List
+2) List
+3) List
+水平線 	Horizontal Rule
+----- 	Horizontal Rule
+---
+
+or
+Horizontal Rule
+***
+コードブロック 	#+begin_src
+# code block
+echo "hoge"
+#+end_src 	```
+# code block
+echo "hoge"
+```
+
+or
+ # code block
+ echo "hoge"
+インラインコード 	~Inline code~ with equals
