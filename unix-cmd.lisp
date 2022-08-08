@@ -24,12 +24,12 @@
 	    :while line
 	    :do (format t "~a~%" line))))) ; => CAT
 
-;;(cat "~/*.txt")		; =>
+
 
 (defun touch (file)
-    (close (open "~/f.txt" :direction :probe
-			   :if-does-not-exist :create 
-			   :if-exists :append))) ; => TOUCH
+  (with-open-file (out file
+		       :if-does-not-exist :create))) ; => TOUCH
+
 ;;(touch "hoge.txt")				 ; => T
 
 (defun rm (file)
