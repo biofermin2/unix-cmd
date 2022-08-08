@@ -15,6 +15,7 @@
 (defun ls (path)
   (uiop:directory-files path))		; => LS
 ;; (ls "~/test/")				; => (#P"/home/hiro/test/fuga" #P"/home/hiro/test/hoge")
+;; (ls (pwd))				; => (#P"/home/hiro/test/fuga" #P"/home/hiro/test/hoge")
 
 (defun cat (&rest files)
   (dolist (f (apply #'directory files))
