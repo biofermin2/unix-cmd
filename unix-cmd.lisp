@@ -27,7 +27,8 @@
 		       :if-does-not-exist :create))) ; => TOUCH
 
 (defun rm (file)
-  (delete-file file))			; => RM
+  (let ((f (merge-pathnames file (pwd))))
+    (delete-file f)))			; => RM
 
 (defun mkdir (dir)
   (let ((d (if (zerop (mismatch "/" dir :from-end t))
