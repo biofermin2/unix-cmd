@@ -1,4 +1,4 @@
-﻿(defun pwd ()
+(defun pwd ()
   (uiop:getcwd))			; => PWD
 
 ;; (pwd)					; => #P"/home/hiro/howm/junk/"
@@ -36,4 +36,15 @@
   (delete-file file))			; => RM
 
 ;;(rm "~/test/fuga")			; => T
+
+(defun mkdir (dir)
+  (let ((d (if (zerop (mismatch "/" dir :from-end t))
+	       dir
+	       (format nil "~a/" dir))))
+    (ensure-directories-exist
+     (merge-pathnames (directory-namestring d)
+		      (pwd)))))		; => MKDIR
+
+(defun rmdir (dir)
+  (sb-posix:rmdir dir))			; => RMDIR
 
