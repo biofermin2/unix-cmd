@@ -1,21 +1,15 @@
 (defun pwd ()
   (uiop:getcwd))			; => PWD
 
-;; (pwd)					; => #P"/home/hiro/howm/junk/"
-
-(defun cd (&optional (path (user-homedir-pathname)))
-  (uiop:chdir path))			; => CD
-
-;;(cd)					; => 0
-;;(pwd)					; => #P"/home/hiro/"
-;;(cd "~/test")				; => 0
-;;(pwd)					; => #P"/home/hiro/test/"
+(defun cd (&optional (dir (user-homedir-pathname)))
+  (let ((d (if (equal dir "..")
+	       (make-pathname :directory (butlast (pathname-directory (pwd))))
+	       (merge-pathnames dir
+				(pwd)))))
+    (uiop:chdir d)))			; => CD
 
 (defun ls (&optional (path (pwd)))
   (uiop:directory-files path))		; => LS
-
-;; (ls "~/test/")				; => (#P"/home/hiro/test/fuga" #P"/home/hiro/test/hoge")
-;; (ls)				; => (#P"/home/hiro/test/fuga" #P"/home/hiro/test/hoge")
 
 (defun cat (&rest files)
   (dolist (f (apply #'directory files))
