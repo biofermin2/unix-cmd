@@ -48,3 +48,8 @@
 (defun rmdir (dir)
   (sb-posix:rmdir dir))			; => RMDIR
 
+(defun cp (in-file out-file)
+  (uiop:copy-file (merge-pathnames in-file
+				   (pwd))
+		  (merge-pathnames out-file
+				   (pwd)))) ; => CP
