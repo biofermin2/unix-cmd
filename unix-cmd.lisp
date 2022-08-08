@@ -1,5 +1,9 @@
+(defvar directory-stack ())		; => DIRECTORY-STACK
+
 (defun pwd ()
-  (uiop:getcwd))			; => PWD
+  (let* ((pwd (uiop:getcwd))
+	 (current-dir-name (car (last (pathname-directory pwd)))))
+    (values pwd current-dir-name)))	; => PWD
 
 (defun cd (&optional (dir (user-homedir-pathname)))
   (let ((d (if (equal dir "..")
@@ -18,18 +22,12 @@
 	    :while line
 	    :do (format t "~a~%" line))))) ; => CAT
 
-
-
 (defun touch (file)
   (with-open-file (out file
 		       :if-does-not-exist :create))) ; => TOUCH
 
-;;(touch "hoge.txt")				 ; => T
-
 (defun rm (file)
   (delete-file file))			; => RM
-
-;;(rm "~/test/fuga")			; => T
 
 (defun mkdir (dir)
   (let ((d (if (zerop (mismatch "/" dir :from-end t))
@@ -39,9 +37,6 @@
      (merge-pathnames (directory-namestring d)
 		      (pwd)))))		; => MKDIR
 
-
-;; (defun rmdir (dir)
-;;   (sb-posix:rmdir dir))			; => RMDIR
 
 (defun rmdir (dir)
   (uiop:delete-empty-directory
@@ -55,3 +50,15 @@
 				   (pwd))
 		  (merge-pathnames out-file
 				   (pwd)))) ; => CP
+
+
+(defun pushd (dir)
+  (push (pwd) directory-stack)
+  (let ((d (merge-pathnames dir
+			    (pwd))))
+    (cd d)))				; => PUSHD
+
+(defun popd ()
+  (cd (pop directory-stack)))		; => POPD
+
+
