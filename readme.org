@@ -1,29 +1,18 @@
 https://qiita.com/takaxp/items/a5fa7cec7b0ab2faf3b2
-斜体 	/Italic/ 	*Italic*
 
 
-太字 	*Bold* 	
+/斜体/	/Italic/ 	
 
-見出し1 	
-* Heading 1 	
+*太字* 	*Bold* 	
 
-# Heading 1
+* 見出し1 	* Heading 1 	
 
-=========
-見出し2 	
-** Heading 2 	
+** 見出し2  ** Heading 2 	
 
----------
-リンク 	
-[[http://a][Link]]
+[[https://link.net][リンク]]	[[http://a][Link]]
 
 なお，[[http://a]]とURLだけ入れるのも可．
-	[Link](http://a)
 
-or
-[Link][1]
-︙
-[1]: http://a
 外部画像 	[[http://orgmode.org/img/org-mode-unicorn-logo.png]]
 
 or
