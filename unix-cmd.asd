@@ -2,7 +2,7 @@
   :version "0.1.0"
   :author "biofermin2"
   :license "MIT"
-  :depends-on ()
+  :depends-on (:cl-ppcre)
   :components ((:module "src"
                 :components
                 ((:file "unix-cmd"))))
