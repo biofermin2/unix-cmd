@@ -1,75 +1,137 @@
-https://qiita.com/takaxp/items/a5fa7cec7b0ab2faf3b2
+* unix-cmd
+
+common lispからシェルコマンドを実行する方法はいくつもある。
+
+- trivial-shell
+- asdfのuiop
+- sbclのsb-posix
+
+探せば他にいくらでも出てくる気はする。 
+ただ、それぞれ使い方を新たに覚えるのは面倒だし、 
+個人的にはなるべくunixコマンドの原型を保ったまま同じ感覚で使いたいので、
+少しずつ気が向いたら作ってみる事にした。
+
+はっきり言ってそんなもの作る意味があるのか？
+
+シェルスクリプトでいいんじゃないか？
+
+と思わないでもないが。
+
+* unix command [12/110]
+- [X] pwd
+- [X] cd
+- [X] ls
+- [X] cat
+- [X] touch
+- [X] rm
+- [X] mkdir
+- [X] rmdir
+- [X] cp
+- [X] pushd
+- [X] popd
+- [X] date
+- [ ] head
+- [ ] tail
+- [ ] wc
+- [ ] diff
+- [ ] cut
+- [ ] echo
+- [ ] uniq
+- [ ] sort
+- [ ] nkf
+- [ ] history
+- [ ] ps
+- [ ] jobs
+- [ ] bg
+- [ ] fg
+- [ ] kill
+- [ ] lp
+- [ ] chmod
+- [ ] last
+- [ ] du
+- [ ] df
+- [ ] ln
+- [ ] which
+- [ ] man
+- [ ] alias
+- [ ] unalias
+- [ ] tar
+- [ ] gunzip
+- [ ] ip
+- [ ] ssh
+- [ ] scp
+- [ ] curl
+- [ ] su
+- [ ] shutdown
+- [ ] reboot
+- [ ] hostname
+- [ ] groups
+- [ ] chown
+- [ ] chgrp
+- [ ] useradd
+- [ ] userdel
+- [ ] goupadd
+- [ ] groupdel
+- [ ] passwd
+- [ ] set
+- [ ] prinenv
+- [ ] export
+- [ ] unset
+- [ ] mv
+- [ ] grep
+- [ ] find
+- [ ] cal
+- [ ] locate
+- [ ] watch
+- [ ] xargs
+- [ ] exit
+- [ ] merge
+- [ ] dd
+- [ ] split
+- [ ] comm
+- [ ] diff
+- [ ] less
+- [ ] more
+- [ ] chsh
+- [ ] env
+- [ ] finger
+- [ ] id
+- [ ] login
+- [ ] mount
+- [ ] su
+- [ ] w
+- [ ] who
+- [ ] ftp
+- [ ] ping
+- [ ] hostid
+- [ ] hostname
+- [ ] scp
+- [ ] tcpdump
+- [ ] telnet
+- [ ] at
+- [ ] atq
+- [ ] atrm
+- [ ] batch
+- [ ] gzip
+- [ ] lha
+- [ ] unzip
+- [ ] uudecode
+- [ ] zip
+- [ ] lpc
+- [ ] lpq
+- [ ] lpr
+- [ ] lprm
+- [ ] lpstat
+- [ ] gcc
+- [ ] quota
+- [ ] time
+- [ ] whatis
+- [ ] seq
+- [ ] bc
 
 
-/斜体/	/Italic/ 	
 
-*太字* 	*Bold* 	
 
-* 見出し1 	* Heading 1 	
 
-** 見出し2  ** Heading 2 	
 
-[[https://link.net][リンク]]	[[http://a][Link]]
 
-なお，[[http://a]]とURLだけ入れるのも可．
-
-外部画像 	[[http://orgmode.org/img/org-mode-unicorn-logo.png]]
-
-or
-[[https://orgmode.org][https://orgmode.org/img/org-mode-unicorn-logo.png]]
-
-なお，[[]]で括らない生のURLでもOK．
-	![Image](https://commonmark.org/help/images/favicon.png)
-
-or
-![Image][1]
-︙
-[1]: http://orgmode.org/img/org-mode-unicorn-logo.png
-引用 	#+begin_quote
-Quote
-#+end_quote 	> Blockquote
-リスト 	- List
-- List
-- List
-
-+ も使える．
-	* List
-* List
-* List
-
-or
-- List
-- List
-- List
-番号リスト 	1. One
-2. Two
-3. Three
-
-1),2),3) も使える．
-	1. One
-2. Two
-3. Three
-
-or
-1) List
-2) List
-3) List
-水平線 	Horizontal Rule
------ 	Horizontal Rule
----
-
-or
-Horizontal Rule
-***
-コードブロック 	#+begin_src
-# code block
-echo "hoge"
-#+end_src 	```
-# code block
-echo "hoge"
-```
-
-or
- # code block
- echo "hoge"
-インラインコード 	~Inline code~ with equals
