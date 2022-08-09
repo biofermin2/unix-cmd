@@ -1,5 +1,6 @@
+;;(ql:quickload '(:cl-ppcre) :silent t)
 (defpackage :unix-cmd
-  (:use :cl)
+  (:use :cl :ppcre)
   (:export :directory-stack
    :pwd :ls :cat :rm :touch :rmdir :pushd :popd
    :date :cp :mkdir))			; => #<PACKAGE "UNIX-CMD">
