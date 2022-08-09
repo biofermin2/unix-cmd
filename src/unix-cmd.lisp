@@ -81,3 +81,13 @@
     (loop :repeat n :for line = (read-line in nil nil)
 	  :while line
 	  :do (format t "~a~%" line))))	; => HEAD
+
+(defun wc (&rest files)
+  (dolist (f (apply #'directory files))
+    (with-open-file (in f :direction :input)
+      (loop :for l = (read-line in nil nil)
+	    :while l
+	    :count l :into line
+	    :sum (length (ppcre:split " " l)) :into word
+	    :sum (length l) :into char
+	    :finally (format t "~d ~d ~d ~a~%" line word char f))))) ; => WC
