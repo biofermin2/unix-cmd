@@ -14,11 +14,11 @@
 	 (current-dir-name (car (last (pathname-directory pwd)))))
     (values pwd current-dir-name)))	; => PWD
 
-(defun cd (&optional (dir (user-homedir-pathname)))
-  (let ((d (if (equal dir "..")
-	       (make-pathname :directory (butlast (pathname-directory (pwd))))
-	       (merge-pathnames dir
-				(pwd)))))
+(defun cd (&optional dir)
+  (let ((d (if dir
+	       (truename (merge-pathnames (make-pathname :directory `(:relative ,dir))
+					  (pwd)))
+	       (user-homedir-pathname))))
     (uiop:chdir d)))			; => CD
 
 (defun ls (&optional (path (pwd)))
