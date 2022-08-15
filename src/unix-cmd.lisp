@@ -74,8 +74,10 @@
     (let ((jdow (nth dow '("月" "火" "水" "木" "金" "土" "日"))))
       (format t "~d年 ~d月 ~d日 ~a曜日 ~2,'0d:~2,'0d:~2,'0d " yr mon date jdow hr min sec)))) ; => DATE
 
-(defun echo (str)
-  (format t "~a~%" str))		; => ECHO
+(defun echo (x)
+  x)					; => ECHO
+;;(defun echo (x)
+;;  (identity x))	
 
 (defun head (file &key (n 10))
   (with-open-file (in file :direction :input)
