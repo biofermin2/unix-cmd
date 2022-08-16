@@ -17,7 +17,7 @@ common lispからシェルコマンドを実行する方法はいくつもある
 
 と思わないでもないが。
 
-* unix command [12/110]
+* unix command [15/110]
 - [X] pwd
 - [X] cd
 - [X] ls
@@ -30,12 +30,12 @@ common lispからシェルコマンドを実行する方法はいくつもある
 - [X] pushd
 - [X] popd
 - [X] date
-- [ ] head
+- [X] head
 - [ ] tail
-- [ ] wc
+- [X] wc
 - [ ] diff
 - [ ] cut
-- [ ] echo
+- [X] echo
 - [ ] uniq
 - [ ] sort
 - [ ] nkf
