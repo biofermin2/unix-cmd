@@ -75,9 +75,7 @@
       (format t "~d年 ~d月 ~d日 ~a曜日 ~2,'0d:~2,'0d:~2,'0d " yr mon date jdow hr min sec)))) ; => DATE
 
 (defun echo (x)
-  x)					; => ECHO
-;;(defun echo (x)
-;;  (identity x))	
+  (format t "~a" x))					; => ECHO	
 
 (defun head (file &key (n 10))
   (with-open-file (in file :direction :input)
