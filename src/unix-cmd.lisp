@@ -92,3 +92,18 @@
 	    :sum (length (ppcre:split " " l)) :into word
 	    :sum (length l) :into char
 	    :finally (format t "~d ~d ~d ~a~%" line word char f))))) ; => WC
+
+(defun seq (&rest arg &aux (len (length arg)))
+  (case len
+    (1 (setq end (car arg)
+             start 1
+             inc 1))
+    (2 (setq start (car arg)
+             end (second arg)
+             inc 1))
+    (3 (setq start (car arg)
+             inc (second arg)
+             end (third arg))))
+  (loop :for i :from start :to end :by inc
+        :do (print i)))                 ; =>SEQ 
+
