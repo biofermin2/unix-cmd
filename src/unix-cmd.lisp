@@ -32,8 +32,9 @@
 	    :do (format t "~a~%" line))))) ; => CAT
 
 (defun touch (file)
-  (with-open-file (out file
-		       :if-does-not-exist :create))) ; => TOUCH
+  (let ((f (merge-pathnames file (pwd))))
+    (with-open-file (out f :direction :output
+                              :if-does-not-exist :create)))) ; =>TOUCH 
 
 (defun rm (file)
   (let ((f (merge-pathnames file (pwd))))
