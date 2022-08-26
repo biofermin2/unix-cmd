@@ -2,9 +2,9 @@
 (defpackage :unix-cmd
   (:use :cl :ppcre)
   (:export :directory-stack
-   :pwd :ls :cat :rm :touch :rmdir :pushd :popd
-   :date :cp :mkdir))			; => #<PACKAGE "UNIX-CMD">
-(in-package :unix-cmd)			; => #<PACKAGE "UNIX-CMD">
+   :pwd :cd :ls :cat :rm :touch :rmdir :pushd :popd
+   :date :cp :mkdir :echo :wc :seq))    ; =>#<PACKAGE "UNIX-CMD"> 
+(in-package :unix-cmd)                  ; =>#<PACKAGE "UNIX-CMD"> 
 
 
 (defvar directory-stack ())		; => DIRECTORY-STACK
