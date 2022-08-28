@@ -9,6 +9,9 @@
 
 (defvar directory-stack ())		; => DIRECTORY-STACK
 
+(defun current-dir-name (pwd)
+  (car (last (pathname-directory pwd)))) ; =>CURRENT-DIR-NAME 
+
 (defun pwd ()
   (let* ((pwd (uiop:getcwd))
 	 (current-dir-name (car (last (pathname-directory pwd)))))
