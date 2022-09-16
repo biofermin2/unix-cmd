@@ -1,6 +1,5 @@
-;;(ql:quickload '(:cl-ppcre) :silent t)
 (defpackage :unix-cmd
-  (:use :cl :ppcre)
+  (:use :cl)
   (:export :directory-stack
    :pwd :cd :ls :cat :rm :touch :rmdir :pushd :popd
    :date :cp :mkdir :echo :wc :seq))    ; =>#<PACKAGE "UNIX-CMD"> 
@@ -8,6 +7,15 @@
 
 
 (defvar directory-stack ())		; => DIRECTORY-STACK
+
+(defun split (dt str)                  
+  (let ((pos (search dt str))
+        (size (length dt)))
+    (if pos
+	(cons (subseq str 0 pos)
+	      (split dt (subseq str (+ pos size))))
+      (list str))))                    ; =>SPLIT 
+
 
 (defun current-dir-name (pwd)
   (car (last (pathname-directory pwd)))) ; =>CURRENT-DIR-NAME 
@@ -25,7 +33,12 @@
     (uiop:chdir d)))			; => CD
 
 (defun ls (&optional (path (pwd)))
-  (uiop:directory-files path))		; => LS
+  (let ((files (mapcar #'file-namestring
+                       (uiop:directory-files path)))
+        (dirs (mapcar #'(lambda (x) (enough-namestring x (truename path)))
+                      (uiop:subdirectories path))))
+  (format t "~{~a~%~}" (append files dirs)))) ; =>LS 
+
 
 (defun cat (&rest files)
   (dolist (f (apply #'directory files))
@@ -73,10 +86,11 @@
   (cd (pop directory-stack)))		; => POPD
 
 (defun date ()
-  (multiple-value-bind (sec min hr date mon yr dow daylight-p zone)
+  (multiple-value-bind (sec min hr date mon yr dow)
       (decode-universal-time (get-universal-time))
     (let ((jdow (nth dow '("月" "火" "水" "木" "金" "土" "日"))))
-      (format t "~d年 ~d月 ~d日 ~a曜日 ~2,'0d:~2,'0d:~2,'0d " yr mon date jdow hr min sec)))) ; => DATE
+      (format t "~d年 ~d月 ~d日 ~a曜日 ~2,'0d:~2,'0d:~2,'0d " yr mon date jdow hr min sec)))) ; =>DATE 
+
 
 (defun echo (x)
   (format t "~a" x))					; => ECHO	
@@ -93,21 +107,25 @@
       (loop :for l = (read-line in nil nil)
 	    :while l
 	    :count l :into line
-	    :sum (length (ppcre:split " " l)) :into word
+	    :sum (length (split " " l)) :into word
 	    :sum (length l) :into char
-	    :finally (format t "~d ~d ~d ~a~%" line word char f))))) ; => WC
+	    :finally (format t "~d ~d ~d ~a~%" line word char f))))) ; =>WC 
 
-(defun seq (&rest arg &aux (len (length arg)))
-  (case len
-    (1 (setq end (car arg)
-             start 1
-             inc 1))
-    (2 (setq start (car arg)
-             end (second arg)
-             inc 1))
-    (3 (setq start (car arg)
-             inc (second arg)
-             end (third arg))))
-  (loop :for i :from start :to end :by inc
-        :do (print i)))                 ; =>SEQ 
+
+(defun seq (&rest arg)
+  ;; seq [OPTION]... LAST
+  ;; seq [OPTION]... FIRST LAST
+  ;; seq [OPTION]... FIRST INCREMENT LAST
+  (let ((end (car arg))
+        (start 1)
+        (inc 1)
+        (len (length arg)))
+    (case len
+      (2 (setq start end
+               end (second arg)))
+      (3 (setq start end
+               inc (second arg)
+               end (third arg))))
+    (loop :for i :from start :to end :by inc
+          :do (print i))))              ; =>SEQ 
 
