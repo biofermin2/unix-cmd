@@ -25,20 +25,25 @@
 	 (current-dir-name (car (last (pathname-directory pwd)))))
     (values pwd current-dir-name)))	; => PWD
 
-(defun cd (&optional dir)
-  (let ((d (if dir
-	       (truename (merge-pathnames (make-pathname :directory `(:relative ,dir))
-					  (pwd)))
-	       (user-homedir-pathname))))
-    (uiop:chdir d)))			; => CD
+(defun cd (&optional (dir (user-homedir-pathname)))
+  (let ((d (merge-pathnames dir (pwd))))
+    (uiop:chdir d)
+    (pwd)))                             ; =>CD 
 
-(defun ls (&optional (path (pwd)))
-  (let ((files (mapcar #'file-namestring
-                       (uiop:directory-files path)))
-        (dirs (mapcar #'(lambda (x) (enough-namestring x (truename path)))
-                      (uiop:subdirectories path))))
-  (format t "~{~a~%~}" (append files dirs)))) ; =>LS 
-
+(defun ls (&optional (path "*"))
+  (format t "~{~a~%~}"
+          (mapcar #'(lambda (x) (enough-namestring x (pwd)))
+                  (cond ((or (equal path ".") (equal path "*"))
+                         (directory (merge-pathnames "*.*" (pwd))))
+                        ((equal path "*.*")
+                         (set-difference
+                          (directory (merge-pathnames "*.*" (pwd)))
+                          (directory (merge-pathnames "*" (pwd)))))
+                        ((equal path "-d")
+                         (directory (merge-pathnames "*" (pwd))))
+                        ((equal path "..")
+                         (directory (merge-pathnames "*.*" (cd path))))
+                        (t (directory (merge-pathnames path (pwd)))))))) ; =>LS 
 
 (defun cat (&rest files)
   (dolist (f (apply #'directory files))
