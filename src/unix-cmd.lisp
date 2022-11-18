@@ -1,12 +1,12 @@
 (defpackage :unix-cmd
   (:use :cl)
   (:export :directory-stack
-   :pwd :cd :ls :cat :rm :touch :rmdir :pushd :popd
+   :pwd :cd :ls :ls-list :cat :rm :touch :rmdir :pushd :popd
    :date :cp :mkdir :echo :wc :seq))    ; =>#<PACKAGE "UNIX-CMD"> 
 (in-package :unix-cmd)                  ; =>#<PACKAGE "UNIX-CMD"> 
 
 
-(defvar directory-stack ())		; => DIRECTORY-STACK
+(defvar directory-stack ())             ; =>DIRECTORY-STACK 
 
 (defun split (dt str)                  
   (let ((pos (search dt str))
@@ -14,7 +14,7 @@
     (if pos
 	(cons (subseq str 0 pos)
 	      (split dt (subseq str (+ pos size))))
-      (list str))))                    ; =>SPLIT 
+      (list str))))                     ; =>SPLIT 
 
 
 (defun current-dir-name (pwd)
@@ -23,7 +23,7 @@
 (defun pwd ()
   (let* ((pwd (uiop:getcwd))
 	 (current-dir-name (car (last (pathname-directory pwd)))))
-    (values pwd current-dir-name)))	; => PWD
+    (values pwd current-dir-name)))     ; =>PWD 
 
 (defun cd (&optional (dir (user-homedir-pathname)))
   (let ((d (merge-pathnames dir (pwd))))
@@ -44,6 +44,21 @@
                         ((equal path "..")
                          (directory (merge-pathnames "*.*" (cd path))))
                         (t (directory (merge-pathnames path (pwd)))))))) ; =>LS 
+
+
+(defun ls-list (&optional (path "*"))
+  (mapcar #'(lambda (x) (enough-namestring x (pwd)))
+          (cond ((or (equal path ".") (equal path "*"))
+                 (directory (merge-pathnames "*.*" (pwd))))
+                ((equal path "*.*")
+                 (set-difference
+                  (directory (merge-pathnames "*.*" (pwd)))
+                  (directory (merge-pathnames "*" (pwd)))))
+                ((equal path "-d")
+                 (directory (merge-pathnames "*" (pwd))))
+                ((equal path "..")
+                 (directory (merge-pathnames "*.*" (cd path))))
+                (t (directory (merge-pathnames path (pwd))))))) ; =>LS-LIST 
 
 (defun cat (&rest files)
   (dolist (f (apply #'directory files))
