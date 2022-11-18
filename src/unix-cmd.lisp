@@ -1,7 +1,7 @@
 (defpackage :unix-cmd
   (:use :cl)
   (:export :directory-stack
-   :pwd :cd :ls :ls-list :cat :rm :touch :rmdir :pushd :popd
+   :pwd :cd :ls :ll :cat :rm :touch :rmdir :pushd :popd
    :date :cp :mkdir :echo :wc :seq))    ; =>#<PACKAGE "UNIX-CMD"> 
 (in-package :unix-cmd)                  ; =>#<PACKAGE "UNIX-CMD"> 
 
@@ -46,7 +46,7 @@
                         (t (directory (merge-pathnames path (pwd)))))))) ; =>LS 
 
 
-(defun ls-list (&optional (path "*"))
+(defun ll (&optional (path "*"))
   (mapcar #'(lambda (x) (enough-namestring x (pwd)))
           (cond ((or (equal path ".") (equal path "*"))
                  (directory (merge-pathnames "*.*" (pwd))))
@@ -58,7 +58,7 @@
                  (directory (merge-pathnames "*" (pwd))))
                 ((equal path "..")
                  (directory (merge-pathnames "*.*" (cd path))))
-                (t (directory (merge-pathnames path (pwd))))))) ; =>LS-LIST 
+                (t (directory (merge-pathnames path (pwd))))))) ; =>LL 
 
 (defun cat (&rest files)
   (dolist (f (apply #'directory files))
