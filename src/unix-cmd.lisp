@@ -2,7 +2,7 @@
   (:use :cl)
   (:export :directory-stack
    :pwd :cd :ls :ll :cat :rm :touch :rmdir :pushd :popd
-   :date :cp :mkdir :echo :wc :seq))    ; =>#<PACKAGE "UNIX-CMD"> 
+   :head :date :cp :mkdir :echo :wc :seq))    ; =>#<PACKAGE "UNIX-CMD"> 
 (in-package :unix-cmd)                  ; =>#<PACKAGE "UNIX-CMD"> 
 
 
@@ -113,13 +113,19 @@
 
 
 (defun echo (x)
-  (format t "~a" x))					; => ECHO	
+  (identity x))                         ; =>ECHO 
+;; (defun echo (x)
+;;   x)                                    ; => ECHO
 
-(defun head (file &key (n 10))
+
+
+(defun head (file &optional (n 10) &key header)
   (with-open-file (in file :direction :input)
-    (loop :repeat n :for line = (read-line in nil nil)
-	  :while line
-	  :do (format t "~a~%" line))))	; => HEAD
+    (let ((filename (file-namestring file)))
+      (loop :initially (when header (format t "==> ~a <==~%" filename))
+            :repeat n :for line = (read-line in nil nil)
+	    :while line
+	    :do (format t "~a~%" line))))) ; =>HEAD 
 
 (defun wc (&rest files)
   (dolist (f (apply #'directory files))
