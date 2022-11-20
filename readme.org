@@ -98,7 +98,7 @@ common lispからシェルコマンドを実行する方法はいくつもある
 - [ ] exit
 - [ ] merge
 - [ ] dd
-- [ ] split
+- [x] split
 - [ ] comm
 - [ ] diff
 - [ ] less
