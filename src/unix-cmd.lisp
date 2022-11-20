@@ -1,6 +1,6 @@
 (defpackage :unix-cmd
   (:use :cl)
-  (:export :directory-stack
+  (:export :directory-stack :split
    :pwd :cd :ls :ll :cat :rm :touch :rmdir :pushd :popd
    :head :date :cp :mkdir :echo :wc :seq))    ; =>#<PACKAGE "UNIX-CMD"> 
 (in-package :unix-cmd)                  ; =>#<PACKAGE "UNIX-CMD"> 
