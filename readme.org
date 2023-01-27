@@ -1,15 +1,27 @@
 * unix-cmd
 
+lisp functions that can use as if unix commands.
+
 common lispからシェルコマンドを実行する方法はいくつもある。
 
+there are some ways to execute shell command from common lisp program
+as follows.
+
 - trivial-shell
-- asdfのuiop
-- sbclのsb-posix
+- uiop of asdf
+- sb-posix of sbcl
 
 探せば他にいくらでも出てくる気はする。 
+
+these ways are not all of it.
+
 ただ、それぞれ使い方を新たに覚えるのは面倒だし、 
 個人的にはなるべくunixコマンドの原型を保ったまま同じ感覚で使いたいので、
 少しずつ気が向いたら作ってみる事にした。
+
+anyway, it annoyed me to learn each usage,
+and I want to use shell commands in common lisp as same as unix commands does.
+so I decided to make such functions that I want.
 
 はっきり言ってそんなもの作る意味があるのか？
 
