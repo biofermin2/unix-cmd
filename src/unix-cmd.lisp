@@ -2,8 +2,8 @@
   (:use :cl)
   (:export :directory-stack :split
    :pwd :cd :ls :ll :cat :rm :touch :rmdir :pushd :popd
-   :head :date :cp :mkdir :echo :wc :seq))    ; =>#<PACKAGE "UNIX-CMD"> 
-(in-package :unix-cmd)                  ; =>#<PACKAGE "UNIX-CMD"> 
+   :head :date :cp :mkdir :echo :wc :seq)) ; =>#<PACKAGE "UNIX-CMD"> 
+(in-package :unix-cmd)                     ; =>#<PACKAGE "UNIX-CMD"> 
 
 
 (defvar directory-stack ())             ; =>DIRECTORY-STACK 
@@ -60,12 +60,12 @@
                  (directory (merge-pathnames "*.*" (cd path))))
                 (t (directory (merge-pathnames path (pwd))))))) ; =>LL 
 
-(defun cat (&rest files)
-  (dolist (f (apply #'directory files))
+(defun cat (files)
+  (dolist (f (directory (merge-pathnames files (pwd))))
     (with-open-file (in f :direction :input)
       (loop :for line = (read-line in nil nil)
 	    :while line
-	    :do (format t "~a~%" line))))) ; => CAT
+	    :do (format t "~a~%" line))))) ; =>CAT 
 
 (defun touch (file)
   (let ((f (merge-pathnames file (pwd))))
@@ -74,7 +74,7 @@
 
 (defun rm (file)
   (let ((f (merge-pathnames file (pwd))))
-    (delete-file f)))			; => RM
+    (delete-file f)))                   ; =>RM 
 
 (defun mkdir (dir)
   (let ((d (if (zerop (mismatch "/" dir :from-end t))
@@ -82,28 +82,28 @@
 	       (format nil "~a/" dir))))
     (ensure-directories-exist
      (merge-pathnames (directory-namestring d)
-		      (pwd)))))		; => MKDIR
+		      (pwd)))))         ; =>MKDIR 
 
 
 (defun rmdir (dir)
   (uiop:delete-empty-directory
    (merge-pathnames dir
-		    (pwd))))		; => RMDIR
+		    (pwd))))            ; =>RMDIR 
 
 (defun cp (in-file out-file)
   (uiop:copy-file (merge-pathnames in-file
 				   (pwd))
 		  (merge-pathnames out-file
-				   (pwd)))) ; => CP
+				   (pwd)))) ; =>CP 
 
 (defun pushd (dir)
   (push (pwd) directory-stack)
   (let ((d (merge-pathnames dir
 			    (pwd))))
-    (cd d)))				; => PUSHD
+    (cd d)))                            ; =>PUSHD 
 
 (defun popd ()
-  (cd (pop directory-stack)))		; => POPD
+  (cd (pop directory-stack)))           ; =>POPD 
 
 (defun date ()
   (multiple-value-bind (sec min hr date mon yr dow)
@@ -113,11 +113,9 @@
 
 
 (defun echo (x)
-  (identity x))                         ; =>ECHO 
+  (identity x))   ; =>ECHO 
 ;; (defun echo (x)
 ;;   x)                                    ; => ECHO
-
-
 
 (defun head (file &optional (n 10) &key header)
   (with-open-file (in file :direction :input)
@@ -127,8 +125,9 @@
 	    :while line
 	    :do (format t "~a~%" line))))) ; =>HEAD 
 
-(defun wc (&rest files)
-  (dolist (f (apply #'directory files))
+(defun wc (files)
+  "line word char (in case unix,number means line word byte)"
+  (dolist (f (directory (merge-pathnames files (pwd))))
     (with-open-file (in f :direction :input)
       (loop :for l = (read-line in nil nil)
 	    :while l
@@ -136,7 +135,6 @@
 	    :sum (length (split " " l)) :into word
 	    :sum (length l) :into char
 	    :finally (format t "~d ~d ~d ~a~%" line word char f))))) ; =>WC 
-
 
 (defun seq (&rest arg)
   ;; seq [OPTION]... LAST
